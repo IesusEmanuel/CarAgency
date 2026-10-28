@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Imagem indisponível">
+  <defs>
+    <linearGradient id="fundo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a1e"/>
+      <stop offset="1" stop-color="#0c0c0e"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#fundo)"/>
+  <g fill="none" stroke="#3a3a42" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M190 270 L215 215 Q225 195 250 192 L420 190 Q455 190 478 214 L520 246 L590 256 Q612 262 612 284 L612 296 L190 296 Z"/>
+    <circle cx="274" cy="300" r="34" fill="#0c0c0e"/>
+    <circle cx="526" cy="300" r="34" fill="#0c0c0e"/>
+  </g>
+  <text x="400" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" letter-spacing="6" fill="#55555e">SEM IMAGEM</text>
+</svg>

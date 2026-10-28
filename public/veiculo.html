@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Veículo | Apex Motorwerks</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/comum.css">
+  <link rel="stylesheet" href="css/veiculo.css">
+</head>
+<body id="pagina-veiculo">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="filtro-liquido" x="-20%" y="-60%" width="140%" height="220%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="desfoque"/>
+        <feColorMatrix in="desfoque" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="liquido"/>
+        <feBlend in="SourceGraphic" in2="liquido"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ===================== HEADER (sticky) ===================== -->
+  <header id="cabecalho">
+    <div class="container cabecalho__interno">
+      <a href="index.html#home" class="logo" id="logo" aria-label="Apex Motorwerks - início">
+        <span class="logo__barra"></span>
+        <span class="logo__nome">APEX <span class="logo__destaque">MOTORWERKS</span></span>
+      </a>
+
+      <nav id="navegacao" aria-label="Navegação principal">
+        <div class="nav__liquido" id="nav-liquido" aria-hidden="true">
+          <span class="nav__gota nav__gota--cauda" id="nav-gota-cauda"></span>
+          <span class="nav__gota nav__gota--cabeca" id="nav-gota-cabeca"></span>
+        </div>
+        <ul class="nav__lista" id="nav-lista">
+          <li class="nav__item"><a href="index.html#home" class="nav__link" data-secao="home">Home</a></li>
+          <li class="nav__item"><a href="index.html#procurar-veiculos" class="nav__link" data-secao="procurar-veiculos">Disponíveis</a></li>
+          <li class="nav__item"><a href="index.html#privilegios" class="nav__link" data-secao="privilegios">Populares</a></li>
+          <li class="nav__item"><a href="index.html#recem-saidos" class="nav__link" data-secao="recem-saidos">Entregas</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="detalhe-veiculo">
+    <div class="container">
+
+      <!-- Estado inicial / erro: preenchido por js/veiculo.js -->
+      <div id="detalhe-aviso" class="detalhe__aviso">
+        <i class="fa-solid fa-spinner fa-spin"></i> Carregando veículo...
+      </div>
+
+      <div id="detalhe-conteudo" hidden>
+
+        <!-- Trilha + selos -->
+        <div class="detalhe__trilha">
+          <div class="trilha__caminho">
+            <a href="index.html#procurar-veiculos" id="trilha-voltar"><i class="fa-solid fa-arrow-left"></i> Disponíveis</a>
+            <span>/</span>
+            <span class="trilha__atual" id="trilha-atual"></span>
+          </div>
+          <div class="trilha__selos" id="trilha-selos"></div>
+        </div>
+
+        <!-- Mudar veículo -->
+        <div class="troca__painel" id="troca-painel">
+          <div class="troca__topo">
+            <span><i class="fa-solid fa-arrow-right-arrow-left"></i>Mudar veículo</span>
+            <span>Clique para buscar novo veículo</span>
+          </div>
+          <div class="troca__lista" id="troca-lista"></div>
+        </div>
+
+        <!-- Título + preço -->
+        <section class="detalhe__titulo-bloco" id="bloco-titulo">
+          <div>
+            <span class="titulo__selo">Veículo personalizado</span>
+            <h1 id="detalhe-titulo"></h1>
+            <p id="detalhe-subtitulo"></p>
+          </div>
+          <div class="preco__painel" id="preco-painel">
+            <div class="preco__principal">
+              <span class="preco__rotulo">Valor real</span>
+              <div class="preco__valor" id="preco-valor"></div>
+              <div class="preco__secundario" id="preco-usd"></div>
+              <div class="preco__parcela" id="preco-parcela"></div>
+            </div>
+            <div class="preco__benchmark" id="preco-benchmark" hidden>
+              <span class="preco__rotulo">Tabela FIPE / Benchmark</span>
+              <div class="benchmark__valor" id="benchmark-valor"></div>
+              <span class="benchmark__economia" id="benchmark-economia"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Galeria -->
+        <section class="galeria" id="galeria">
+          <div class="galeria__principal" id="galeria-principal">
+            <img id="galeria-imagem" src="img/placeholder.svg" alt="">
+            <span class="galeria__legenda"><i class="fa-solid fa-video"></i><span id="galeria-legenda">Vista frontal</span></span>
+            <button type="button" class="galeria__tela-cheia" id="btn-tela-cheia" aria-label="Tela cheia"><i class="fa-solid fa-expand"></i></button>
+            <div class="galeria__chips" id="galeria-chips"></div>
+            <span class="galeria__camera"><i class="fa-solid fa-camera"></i>Câmera Full HD 4K</span>
+          </div>
+          <div class="galeria__miniaturas" id="galeria-miniaturas"></div>
+        </section>
+
+        <div class="detalhe__corpo">
+
+          <!-- Coluna principal -->
+          <div class="detalhe__coluna" id="coluna-principal">
+
+            <section class="bloco" id="bloco-especificacoes">
+              <div class="bloco__topo">
+                <div>
+                  <p class="sobretitulo">Mecânica e detalhes</p>
+                  <h2 class="bloco__titulo">Especificações e registro do veículo</h2>
+                </div>
+                <span class="bloco__selo">Veículo personalizado</span>
+              </div>
+
+              <div class="specs__grade">
+                <div class="specs__celula"><span class="specs__rotulo">Marca e modelo</span><span class="specs__valor" id="spec-modelo"></span></div>
+                <div class="specs__celula"><span class="specs__rotulo">Ano</span><span class="specs__valor" id="spec-ano"></span></div>
+                <div class="specs__celula"><span class="specs__rotulo">Kilometragem</span><span class="specs__valor" id="spec-km"></span></div>
+                <div class="specs__celula"><span class="specs__rotulo">Aceleração (0–100km/h)</span><span class="specs__valor" id="spec-aceleracao"></span></div>
+                <div class="specs__celula"><span class="specs__rotulo">Transmissão</span><span class="specs__valor" id="spec-transmissao"></span></div>
+                <div class="specs__celula"><span class="specs__rotulo">Final da placa</span><span class="specs__valor" id="spec-placa"></span></div>
+                <div class="specs__celula specs__celula--2"><span class="specs__rotulo">Motor</span><span class="specs__valor" id="spec-motor"></span></div>
+                <div class="specs__celula"><span class="specs__rotulo">ID de estoque</span><span class="specs__valor specs__valor--vermelho" id="spec-estoque"></span></div>
+                <div class="specs__celula specs__celula--cheia"><span class="specs__rotulo">Cor e finalização</span><span class="specs__valor" id="spec-cor"></span></div>
+                <div class="specs__celula specs__celula--cheia"><span class="specs__rotulo">Revestimento interno</span><span class="specs__valor" id="spec-interno"></span></div>
+                <div class="specs__celula specs__celula--cheia"><span class="specs__rotulo">Blindagem</span><span class="specs__valor specs__valor--vermelho" id="spec-blindagem"></span></div>
+              </div>
+
+              <div class="integridade" id="integridade">
+                <div class="integridade__topo">
+                  <span>Integridade estrutural por escaneamento a laser</span>
+                  <span id="integridade-pontuacao"></span>
+                </div>
+                <div class="integridade__barra"><div class="integridade__preenchimento" id="integridade-barra"></div></div>
+                <div class="integridade__itens">
+                  <span id="integridade-chassi"></span>
+                  <span id="integridade-freios"></span>
+                  <span id="integridade-cilindros"></span>
+                </div>
+              </div>
+            </section>
+
+            <section class="bloco" id="bloco-visao-geral">
+              <p class="sobretitulo">Detalhes da aquisição</p>
+              <h2 class="bloco__titulo" style="margin-bottom:12px">Visão geral curada e procedência de colecionador único</h2>
+              <p class="visao__texto" id="visao-texto"></p>
+              <div class="diferenciais__grade" id="diferenciais"></div>
+            </section>
+
+            <section class="bloco" id="bloco-opcionais">
+              <div class="bloco__topo">
+                <div>
+                  <p class="sobretitulo">Especificações</p>
+                  <h2 class="bloco__titulo">Opcionais</h2>
+                </div>
+                <span class="bloco__selo" id="opcionais-contador"></span>
+              </div>
+              <div class="opcionais__grade" id="opcionais"></div>
+            </section>
+
+          </div>
+
+          <!-- Coluna lateral -->
+          <aside class="detalhe__coluna" id="coluna-lateral">
+
+            <section class="bloco" id="bloco-contato">
+              <div class="vendedor">
+                <img class="vendedor__foto" id="vendedor-foto" src="img/placeholder.svg" alt="">
+                <div>
+                  <span class="vendedor__rotulo">Contato do vendedor</span>
+                  <div class="vendedor__nome" id="vendedor-nome"></div>
+                  <div class="vendedor__empresa" id="vendedor-empresa"></div>
+                  <div class="vendedor__online" id="vendedor-online">Online</div>
+                </div>
+              </div>
+
+              <div class="lateral__botoes">
+                <a class="btn btn--whatsapp btn--bloco" id="btn-whatsapp" target="_blank" rel="noopener">
+                  <i class="fa-brands fa-whatsapp"></i> Conversar no WhatsApp
+                </a>
+                <button type="button" class="btn btn--secundario btn--bloco" id="btn-agendar-visita">
+                  <i class="fa-regular fa-calendar"></i> Agendar visita
+                </button>
+              </div>
+
+              <form id="form-interesse" novalidate>
+                <div class="campo">
+                  <label class="campo__rotulo" for="interesse-nome">Nome</label>
+                  <input type="text" class="campo__entrada" id="interesse-nome" name="nome" placeholder="ex.: Lord Julian Vance" maxlength="120" required>
+                </div>
+                <div class="form__grade">
+                  <div class="campo">
+                    <label class="campo__rotulo" for="interesse-whatsapp">WhatsApp</label>
+                    <input type="tel" class="campo__entrada" id="interesse-whatsapp" name="whatsapp" placeholder="+55 11 99999-0000" maxlength="20" required>
+                  </div>
+                  <div class="campo">
+                    <label class="campo__rotulo" for="interesse-email">E-mail</label>
+                    <input type="email" class="campo__entrada" id="interesse-email" name="email" placeholder="nome@dominio.com" maxlength="160" required>
+                  </div>
+                </div>
+                <div class="campo" style="margin-top:10px">
+                  <span class="campo__rotulo">Tipo de visita</span>
+                  <div id="dropdown-tipo-visita" class="dropdown"></div>
+                </div>
+                <div class="campo" style="margin-top:10px">
+                  <label class="campo__rotulo" for="interesse-observacoes">Observações</label>
+                  <textarea class="campo__entrada" id="interesse-observacoes" name="observacoes" maxlength="1000"
+                    placeholder="Test-Drive Próprio, Test-Drive com Piloto, Documentação, Financiamento"></textarea>
+                </div>
+                <button type="submit" class="btn btn--primario btn--bloco" id="btn-enviar-interesse" style="margin-top:12px">
+                  Enviar <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <p class="form__mensagem" id="msg-interesse" role="status"></p>
+              </form>
+
+              <ul class="confianca">
+                <li><i class="fa-solid fa-award"></i>100% Garantia</li>
+                <li><i class="fa-solid fa-truck"></i>Transporte em Ambiente Fechado, Pré-Climatizado para todo o país</li>
+                <li><i class="fa-solid fa-receipt"></i>Sem taxas ocultas</li>
+              </ul>
+            </section>
+
+            <section class="bloco" id="bloco-financiamento">
+              <div class="financiamento__topo">
+                <span>Estimativa de financiamento</span>
+                <span>60 – 120 Meses</span>
+              </div>
+              <div class="financiamento__linha"><span>Entrada (50%)</span><strong id="fin-entrada"></strong></div>
+              <div class="financiamento__linha financiamento__linha--destaque"><span>Parcela estimada</span><strong id="fin-parcela"></strong></div>
+              <p class="financiamento__nota">Sujeito a análise. Estruturas personalizadas de pagamento diferido com parcela final estão disponíveis mediante solicitação.</p>
+            </section>
+
+          </aside>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer id="rodape">
+    <div class="container">
+      <div class="rodape__grade">
+        <div class="rodape__coluna">
+          <a href="index.html#home" class="logo"><span class="logo__barra"></span><span class="logo__nome">APEX <span class="logo__destaque">MOTORWERKS</span></span></a>
+          <p class="rodape__texto" style="margin-top:12px">Principal curador de máquinas de performance raras, veículos ultraexóticos e hipercarros sob medida. Entrega com precisão em todo o mundo.</p>
+          <div class="rodape__selos">
+            <span class="selo">Certificado</span>
+            <span class="selo selo--vermelho">99pt na inspeção</span>
+          </div>
+        </div>
+
+        <div class="rodape__coluna">
+          <h4 class="rodape__titulo">Lojas</h4>
+          <p class="rodape__texto">
+            Segunda a Sexta: 09:00 - 20:00<br>
+            Sábado: 10:00 - 18:00<br>
+            Domingo: Apenas Atendimentos com Hora Marcada<br>
+            Entrega Prioritária com Rastreamento (24/7) – Serviço Personalizado
+          </p>
+        </div>
+
+        <div class="rodape__coluna">
+          <h4 class="rodape__titulo">Contato</h4>
+          <p class="rodape__texto">
+            <strong>WhatsApp:</strong> +1 (33) 9 1982-9292<br>
+            <strong>Escritório:</strong> 3412-2929<br>
+            <strong>Email:</strong> desk@apexmotorwerks.com<br>
+            <strong>Endereço:</strong> Av. Tauros Campos, 392, saída para Sabinópolis
+          </p>
+        </div>
+
+        <div class="rodape__coluna">
+          <h4 class="rodape__titulo">Garantia</h4>
+          <div class="rodape__garantia rodape__texto">
+            <strong>Garantia de Autenticidade e Titularidade</strong>
+            Dossiê completo de procedência, escaneamentos estruturais a laser e verificação em registros de fábrica para todos os itens adquiridos.
+          </div>
+        </div>
+      </div>
+
+      <div class="rodape__base">
+        <span>© 2025 APEX MOTORWERKS LLC. Todos os direitos reservados.</span>
+        <nav class="rodape__links" aria-label="Links legais">
+          <a href="#">Política de Privacidade</a>
+          <a href="#">Termos de Consignação</a>
+          <a href="#">Consultoria em Exportação Global</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/comum.js"></script>
+  <script src="js/veiculo.js"></script>
+</body>
+</html>

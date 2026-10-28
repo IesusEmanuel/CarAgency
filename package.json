@@ -1,0 +1,19 @@
+{
+  "name": "apex-motorwerks",
+  "version": "1.0.0",
+  "description": "Site da Apex Motorwerks: HTML, CSS, JS, Express e SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "db:init": "node database/init-db.js",
+    "db:sql": "node database/executar-sql.js",
+    "marcas:importar": "node database/importar-marcas.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "express": "^4.19.2"
+  }
+}

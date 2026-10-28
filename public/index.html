@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apex Motorwerks | Veículos europeus e de alta performance</title>
+  <meta name="description" content="Veículos europeus e de alta performance selecionados a dedo, com inspeção rigorosa e assessoria personalizada.">
+
+  <!-- Fontes: Poppins (textos) e Bebas Neue (títulos). Para trocar, edite --fonte-texto e --fonte-titulo em css/comum.css -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (ícones) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/comum.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body id="pagina-home">
+
+  <!-- Filtro SVG que cria o efeito "líquido" do menu -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="filtro-liquido" x="-20%" y="-60%" width="140%" height="220%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="desfoque"/>
+        <feColorMatrix in="desfoque" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="liquido"/>
+        <feBlend in="SourceGraphic" in2="liquido"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ===================== HEADER (sticky) ===================== -->
+  <header id="cabecalho">
+    <div class="container cabecalho__interno">
+      <a href="index.html#home" class="logo" id="logo" aria-label="Apex Motorwerks - início">
+        <span class="logo__barra"></span>
+        <span class="logo__nome">APEX <span class="logo__destaque">MOTORWERKS</span></span>
+      </a>
+
+      <nav id="navegacao" aria-label="Navegação principal">
+        <div class="nav__liquido" id="nav-liquido" aria-hidden="true">
+          <span class="nav__gota nav__gota--cauda" id="nav-gota-cauda"></span>
+          <span class="nav__gota nav__gota--cabeca" id="nav-gota-cabeca"></span>
+        </div>
+        <ul class="nav__lista" id="nav-lista">
+          <li class="nav__item"><a href="#home" class="nav__link" data-secao="home">Home</a></li>
+          <li class="nav__item"><a href="#procurar-veiculos" class="nav__link" data-secao="procurar-veiculos">Disponíveis</a></li>
+          <li class="nav__item"><a href="#privilegios" class="nav__link" data-secao="privilegios">Populares</a></li>
+          <li class="nav__item"><a href="#recem-saidos" class="nav__link" data-secao="recem-saidos">Entregas</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== HOME / HERO ===================== -->
+    <section id="home">
+      <div class="container hero__grade">
+
+        <div class="hero__conteudo">
+          <h1 class="hero__titulo">Encontre o seu <span>novo sonho</span></h1>
+          <p class="hero__texto">
+            Veículos europeus e de alta performance selecionados a dedo, submetidos a uma inspeção rigorosa.
+            Oferecemos um serviço de assessoria personalizada para a transação financeira, condições de pagamento sob medida.
+          </p>
+
+          <form id="form-busca-rapida" role="search" autocomplete="off">
+            <label class="busca__campo" for="busca-texto">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="busca-texto" name="busca" placeholder="Procurar marca, modelo, ano..." maxlength="60">
+            </label>
+            <button type="submit" class="btn btn--primario" id="btn-procurar">
+              Procurar <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+
+          <div class="selecao-rapida" id="selecao-rapida">
+            <span class="selecao-rapida__titulo">Seleção rápida</span>
+            <button type="button" class="btn btn--secundario btn--mini" data-marca="Chevrolet">Chevrolet</button>
+            <button type="button" class="btn btn--secundario btn--mini" data-marca="Fiat">Fiat</button>
+            <button type="button" class="btn btn--secundario btn--mini" data-marca="Mercedes-Benz">Mercedes</button>
+            <button type="button" class="btn btn--secundario btn--mini" data-marca="Ford">Ford</button>
+            <button type="button" class="btn btn--secundario btn--mini" data-preco-max="35000">Até R$35.000,00</button>
+          </div>
+        </div>
+
+        <!-- Veículo em destaque: VÍDEO (preenchido por js/home.js) -->
+        <a href="#" id="veiculo-destaque" aria-label="Ver detalhes do veículo em destaque">
+          <video id="destaque-video" muted loop playsinline autoplay preload="metadata" poster="img/placeholder.svg">
+            <source id="destaque-video-fonte" src="" type="video/mp4">
+          </video>
+          <span class="destaque__degrade"></span>
+          <span class="tag tag--procurado destaque__selo" id="destaque-selo">Novo</span>
+          <div class="destaque__rodape">
+            <div class="destaque__info">
+              <span class="destaque__status">Disponível</span>
+              <h3 class="destaque__titulo" id="destaque-titulo">Carregando...</h3>
+              <p class="destaque__subtitulo" id="destaque-subtitulo"></p>
+            </div>
+            <strong class="destaque__preco" id="destaque-preco"></strong>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ===================== ESTATÍSTICAS ===================== -->
+    <section id="estatisticas">
+      <div class="container">
+        <div class="estatisticas__grade">
+          <div class="estatistica">
+            <span class="estatistica__icone"><i class="fa-solid fa-car"></i></span>
+            <div><div class="estatistica__valor">90+ Unidades</div><div class="estatistica__rotulo">disponíveis</div></div>
+          </div>
+          <div class="estatistica">
+            <span class="estatistica__icone"><i class="fa-solid fa-star"></i></span>
+            <div><div class="estatistica__valor">+100</div><div class="estatistica__rotulo">clientes satisfeitos</div></div>
+          </div>
+          <div class="estatistica">
+            <span class="estatistica__icone"><i class="fa-solid fa-truck-fast"></i></span>
+            <div><div class="estatistica__valor">72 Hours</div><div class="estatistica__rotulo">até a entrega</div></div>
+          </div>
+          <div class="estatistica">
+            <span class="estatistica__icone"><i class="fa-solid fa-shield-halved"></i></span>
+            <div><div class="estatistica__valor">30 Dias</div><div class="estatistica__rotulo">seguro &amp; garantia</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROCURAR VEÍCULOS ===================== -->
+    <section id="procurar-veiculos">
+      <div class="container">
+
+        <div class="procurar__painel">
+          <div class="procurar__topo">
+            <div class="procurar__titulo">
+              <h2>Procurar veículos</h2>
+              <span id="contador-resultados">Mostrando 0 de 0</span>
+            </div>
+            <button type="button" class="btn btn--secundario btn--mini" id="btn-resetar-filtros">
+              <i class="fa-solid fa-rotate-left"></i> Resetar filtros
+            </button>
+          </div>
+
+          <div class="filtros__grade" id="filtros">
+            <div class="campo">
+              <span class="campo__rotulo">Carroceria</span>
+              <div id="filtro-carroceria" class="dropdown"></div>
+            </div>
+            <div class="campo">
+              <span class="campo__rotulo">Marca</span>
+              <div id="filtro-marca" class="dropdown"></div>
+            </div>
+            <div class="campo">
+              <span class="campo__rotulo">Cor</span>
+              <div id="filtro-cor" class="dropdown"></div>
+            </div>
+            <div class="campo">
+              <span class="campo__rotulo">Ano</span>
+              <div id="filtro-ano" class="dropdown"></div>
+            </div>
+            <div class="campo">
+              <label class="campo__rotulo" for="filtro-preco">Preço máximo</label>
+              <input type="text" id="filtro-preco" class="campo__entrada" inputmode="numeric" placeholder="R$ 0" autocomplete="off">
+            </div>
+            <div class="campo">
+              <span class="campo__rotulo">Ordenar por</span>
+              <div id="filtro-ordenar" class="dropdown"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="grade-veiculos" aria-live="polite"></div>
+
+      </div>
+    </section>
+
+    <!-- ===================== PRIVILÉGIOS (sem hover) ===================== -->
+    <section id="privilegios">
+      <div class="container">
+        <div class="secao__cabecalho">
+          <div>
+            <p class="sobretitulo">Principais benefícios</p>
+            <h2>Privilégios de comprar com a Apex</h2>
+          </div>
+          <span class="secao__nota">Satisfação garantida</span>
+        </div>
+
+        <div class="privilegios__grade">
+          <article class="privilegio" id="privilegio-financiamento">
+            <span class="tag tag--procurado privilegio__selo">TAA de 0,9% disponível</span>
+            <h3 class="privilegio__titulo">Financiamento soberano</h3>
+            <p class="privilegio__texto">Contratos personalizados e flexíveis, com prazos de 36 a 84 meses e opção de pagamento final (parcela balão). Válido para todos os modelos.</p>
+            <div class="privilegio__destaque">
+              <div>
+                <span class="privilegio__rotulo">Período de pré-aprovação</span>
+                <span class="privilegio__valor">Menos de 1 hora</span>
+              </div>
+              <button type="button" class="btn btn--secundario btn--mini btn--sem-hover" id="btn-aplicar-financiamento">Aplicar</button>
+            </div>
+          </article>
+
+          <article class="privilegio" id="privilegio-garantia">
+            <span class="tag tag--procurado privilegio__selo">Garantia com certificação Apex</span>
+            <h3 class="privilegio__titulo">Garantia de fábrica</h3>
+            <p class="privilegio__texto">Cada unidade inclui garantia do trem de força, garantia de procedência (documentação regular) e um dossiê com medições da espessura da pintura.</p>
+            <div class="privilegio__destaque">
+              <div>
+                <span class="privilegio__rotulo">Cobertura incluída</span>
+                <span class="privilegio__valor">30 dias / 40.000km</span>
+              </div>
+              <i class="fa-solid fa-shield-halved privilegio__icone"></i>
+            </div>
+          </article>
+
+          <article class="privilegio" id="privilegio-entrega">
+            <span class="tag tag--procurado privilegio__selo">Entrega</span>
+            <h3 class="privilegio__titulo">Entrega rápida para todo o Brasil</h3>
+            <p class="privilegio__texto">Transporte direto para sua garagem, fazenda, casa, apartamento e para o exterior com cobertura securitária integral durante todo o trajeto.</p>
+            <div class="privilegio__destaque">
+              <div>
+                <span class="privilegio__rotulo">Entrega</span>
+                <span class="privilegio__valor">Garantida em 72h</span>
+              </div>
+              <i class="fa-solid fa-plane-departure privilegio__icone"></i>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RECÉM-SAÍDOS (sem hover) ===================== -->
+    <section id="recem-saidos">
+      <div class="container">
+        <div class="secao__cabecalho">
+          <div>
+            <p class="sobretitulo">Os mais novos</p>
+            <h2>Recém-saídos</h2>
+          </div>
+          <span class="secao__nota" id="entregas-nota">Arquivos de aquisição transparentes</span>
+        </div>
+        <div class="entregas__grade" id="grade-entregas"></div>
+      </div>
+    </section>
+
+    <!-- ===================== NÃO CONSEGUE ENCONTRAR... ===================== -->
+    <section id="sob-medida">
+      <div class="container">
+        <div class="sob-medida__caixa">
+
+          <div class="sob-medida__conteudo">
+            <p class="sobretitulo">Veículos sob medida</p>
+            <h2 class="sob-medida__titulo">Não consegue encontrar o carro dos seus sonhos ?</h2>
+            <p class="sob-medida__texto">
+              Nossa equipe de aquisições mantém relacionamento direto com coleções particulares verificadas e reservas em depósitos especializados.
+              Escolha um veículo e nós o localizamos em até 60 dias.
+            </p>
+            <ul class="sob-medida__itens">
+              <li><i class="fa-regular fa-circle-check"></i>Zero Taxas</li>
+              <li><i class="fa-regular fa-circle-check"></i>Vistoria</li>
+              <li><i class="fa-regular fa-circle-check"></i>Scanner de Pintura</li>
+            </ul>
+          </div>
+
+          <form id="form-sob-medida" novalidate>
+            <h3 class="form__titulo">Enviar resumo da compra</h3>
+            <div class="form__grade">
+              <div class="campo">
+                <label class="campo__rotulo" for="campo-marca-modelo">Marca e modelo</label>
+                <input type="text" class="campo__entrada" id="campo-marca-modelo" name="marcaModelo" placeholder="ex.: Porsche 992 GT3 RS" maxlength="120" required>
+              </div>
+              <div class="campo">
+                <span class="campo__rotulo">Valor</span>
+                <div id="dropdown-valor" class="dropdown"></div>
+              </div>
+              <div class="campo">
+                <label class="campo__rotulo" for="campo-nome">Nome do cliente</label>
+                <input type="text" class="campo__entrada" id="campo-nome" name="nome" placeholder="Nome do cliente" maxlength="120" required>
+              </div>
+              <div class="campo">
+                <label class="campo__rotulo" for="campo-whatsapp">WhatsApp</label>
+                <input type="tel" class="campo__entrada" id="campo-whatsapp" name="whatsapp" placeholder="(00) 00000-0000" maxlength="20" required>
+              </div>
+              <div class="campo campo--cheio">
+                <label class="campo__rotulo" for="campo-descricao">Descrição do veículo</label>
+                <textarea class="campo__entrada" id="campo-descricao" name="descricao" maxlength="1000"
+                  placeholder="Descreva cores, rodas, extras (como multimídia, bancos de couro), final da placa, quilometragem e outros"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn--primario btn--bloco" id="btn-enviar-sob-medida" style="margin-top:14px">
+              <i class="fa-regular fa-circle-check"></i> Enviar
+            </button>
+            <p class="form__mensagem" id="msg-sob-medida" role="status"></p>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer id="rodape">
+    <div class="container">
+      <div class="rodape__grade">
+        <div class="rodape__coluna">
+          <a href="index.html#home" class="logo"><span class="logo__barra"></span><span class="logo__nome">APEX <span class="logo__destaque">MOTORWERKS</span></span></a>
+          <p class="rodape__texto" style="margin-top:12px">Principal curador de máquinas de performance raras, veículos ultraexóticos e hipercarros sob medida. Entrega com precisão em todo o mundo.</p>
+          <div class="rodape__selos">
+            <span class="selo">Certificado</span>
+            <span class="selo selo--vermelho">99pt na inspeção</span>
+          </div>
+        </div>
+
+        <div class="rodape__coluna">
+          <h4 class="rodape__titulo">Lojas</h4>
+          <p class="rodape__texto">
+            Segunda a sexta-feira: 09:00 – 20:00<br>
+            Sábado: 10:00 – 18:00<br>
+            Domingo: Apenas Atendimentos com Hora Marcada<br>
+            Entrega Prioritária com Rastreamento (24/7) – Serviço Personalizado
+          </p>
+        </div>
+
+        <div class="rodape__coluna">
+          <h4 class="rodape__titulo">Contato</h4>
+          <p class="rodape__texto">
+            <strong>WhatsApp:</strong> +1 (33) 9 1982-9292<br>
+            <strong>Escritório:</strong> 3412-2929<br>
+            <strong>Email:</strong> desk@apexmotorwerks.com<br>
+            <strong>Endereço:</strong> Av. Tauros Campos, 392, saída para Sabinópolis
+          </p>
+        </div>
+
+        <div class="rodape__coluna">
+          <h4 class="rodape__titulo">Garantia</h4>
+          <div class="rodape__garantia rodape__texto">
+            <strong>Garantia de Autenticidade e Titularidade</strong>
+            Dossiê completo de procedência, escaneamentos estruturais a laser e verificação em registros de fábrica para todos os itens adquiridos.
+          </div>
+        </div>
+      </div>
+
+      <div class="rodape__base">
+        <span>© 2025 APEX MOTORWERKS LLC. Todos os direitos reservados.</span>
+        <nav class="rodape__links" aria-label="Links legais">
+          <a href="#">Política de Privacidade</a>
+          <a href="#">Termos de Consignação</a>
+          <a href="#">Consultoria em Exportação Global</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/comum.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

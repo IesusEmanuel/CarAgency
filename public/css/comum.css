@@ -1,0 +1,271 @@
+/* =====================================================================
+   APEX MOTORWERKS - Estilos comuns (variáveis, header, botões, dropdown,
+   tags, formulários, rodapé). Usado em index.html e veiculo.html
+   ===================================================================== */
+
+/* ---------- Variáveis ----------
+   Para trocar as fontes depois, altere só --fonte-texto e --fonte-titulo.   */
+:root {
+  --fonte-texto: 'Poppins', sans-serif;      /* textos menores */
+  --fonte-titulo: 'Bebas Neue', sans-serif;  /* h1 (e demais títulos) */
+
+  --vermelho: #e10600;
+  --vermelho-escuro: #9d0400;
+  --vermelho-sombra: rgba(225, 6, 0, 0.35);  /* sombra opaca dos cards */
+
+  --preto: #000000;
+  --branco: #ffffff;
+
+  --fundo: #0d0d0f;
+  --superficie: #161619;
+  --superficie-2: #1d1d21;
+  --superficie-3: #26262b;
+  --borda: #2b2b31;
+
+  --texto: #f2f2f4;
+  --texto-suave: #a3a3ac;
+  --texto-fraco: #6d6d76;
+
+  --nav-liquido: var(--vermelho);            /* cor do fundo líquido do menu */
+  --altura-header: 64px;
+  --raio: 8px;
+  --largura-max: 1200px;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--altura-header) + 12px); }
+body {
+  font-family: var(--fonte-texto);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--texto);
+  background: var(--fundo);
+  -webkit-font-smoothing: antialiased;
+}
+[hidden] { display: none !important; }
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; border: 0; background: none; }
+h1, h2, h3 { font-family: var(--fonte-titulo); font-weight: 400; letter-spacing: 0.02em; line-height: 1.05; }
+.destaque-vermelho { color: var(--vermelho); }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.container { width: 100%; max-width: var(--largura-max); margin: 0 auto; padding: 0 24px; }
+.sobretitulo {
+  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--vermelho); font-weight: 500; margin-bottom: 6px;
+}
+
+/* =====================================================================
+   HEADER (sticky)
+   ===================================================================== */
+#cabecalho {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--altura-header);
+  background: rgba(13, 13, 15, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--borda);
+}
+.cabecalho__interno {
+  height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.logo { display: flex; align-items: center; gap: 8px; font-family: var(--fonte-titulo); font-size: 22px; letter-spacing: 0.06em; }
+.logo__barra { width: 4px; height: 20px; background: var(--vermelho); }
+.logo__destaque { color: var(--vermelho); }
+
+/* ---------- Navegação com fundo líquido ---------- */
+#navegacao { position: relative; }
+.nav__lista { position: relative; display: flex; gap: 4px; }
+.nav__item { display: block; }
+.nav__link {
+  position: relative; z-index: 1;
+  display: block; padding: 8px 18px;
+  font-size: 13px; font-weight: 500; color: var(--texto-suave);
+  border-radius: 6px;
+  transition: color 0.25s ease;
+}
+.nav__link:hover { color: var(--branco); }
+.nav__link--ativo, .nav__link--ativo:hover { color: var(--branco); }
+
+/* Camada do efeito: duas "gotas" que o filtro SVG funde numa só */
+.nav__liquido {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  filter: url(#filtro-liquido);
+}
+.nav__gota {
+  position: absolute; top: 0; left: 0; height: 100%; width: 0;
+  background: var(--nav-liquido);
+  border-radius: 8px;
+  opacity: 0;
+}
+.nav__gota--visivel { opacity: 1; }
+/* a "cabeça" corre na frente; a "cauda" é arrastada logo atrás */
+.nav__liquido--animando .nav__gota--cabeca {
+  transition: left 0.32s cubic-bezier(0.55, 0, 0.25, 1), width 0.32s cubic-bezier(0.55, 0, 0.25, 1);
+}
+.nav__liquido--animando .nav__gota--cauda {
+  transition: left 0.6s cubic-bezier(0.55, 0, 0.25, 1) 0.1s, width 0.6s cubic-bezier(0.55, 0, 0.25, 1) 0.1s;
+}
+
+/* =====================================================================
+   BOTÕES
+   Regra: o hover sempre inverte -> fundo branco, texto preto, ícone vermelho
+   ===================================================================== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 18px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.btn i { transition: color 0.2s ease; }
+
+/* primário: fundo vermelho, texto e ícone brancos (como no PDF) */
+.btn--primario { background: var(--vermelho); color: var(--branco); }
+.btn--primario i { color: var(--branco); }
+
+/* secundário: fundo preto, ícone branco, texto vermelho */
+.btn--secundario { background: var(--preto); color: var(--vermelho); border-color: var(--borda); }
+.btn--secundario i { color: var(--branco); }
+
+.btn:not(.btn--sem-hover):hover { background: var(--branco); color: var(--preto); border-color: var(--branco); }
+.btn:not(.btn--sem-hover):hover i { color: var(--vermelho); }
+
+.btn--bloco { width: 100%; }
+.btn--whatsapp { background: #25d366; color: #08240f; }
+.btn--whatsapp i { color: #08240f; }
+.btn[disabled] { opacity: 0.6; pointer-events: none; }
+
+/* =====================================================================
+   TAGS (cores corrigidas: cada tag tem sempre a mesma cor)
+   ===================================================================== */
+.tag {
+  display: inline-block; padding: 2px 7px;
+  font-size: 8.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: 3px; line-height: 1.6;
+}
+.tag--procurado { background: var(--vermelho); color: var(--branco); }
+.tag--zero-km   { background: #1f6f3e; color: #d6ffe5; }
+.tag--luxo      { background: #8a6a12; color: #fff1c7; }
+.tag--familia   { background: #1f4f8a; color: #d8e9ff; }
+.tag--km-baixa  { background: #12727a; color: #d2fbff; }
+
+/* =====================================================================
+   DROPDOWN "ESCADA": as opções descem em degraus, uma após a outra
+   ===================================================================== */
+.dropdown { position: relative; }
+.dropdown__botao {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 8px 10px;
+  background: var(--fundo);
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  font-size: 11px; text-align: left;
+  transition: border-color 0.2s ease;
+}
+.dropdown__botao:hover, .dropdown--aberto .dropdown__botao { border-color: var(--texto-fraco); }
+.dropdown__valor { display: flex; align-items: center; gap: 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.dropdown__seta { font-size: 9px; color: var(--texto-suave); transition: transform 0.25s ease; }
+.dropdown--aberto .dropdown__seta { transform: rotate(180deg); }
+
+.dropdown__lista {
+  display: none;
+  position: absolute; top: calc(100% + 4px); left: 0; z-index: 60;
+  min-width: 100%; max-height: 280px; overflow-y: auto;
+  background: var(--superficie-2);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55);
+  padding: 4px;
+}
+.dropdown--aberto .dropdown__lista { display: block; }
+.dropdown__opcao {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; font-size: 11px; white-space: nowrap;
+  border-radius: 4px; cursor: pointer;
+  color: var(--texto-suave);
+}
+.dropdown__opcao:hover, .dropdown__opcao:focus-visible { background: var(--superficie-3); color: var(--branco); outline: none; }
+.dropdown__opcao--selecionada { color: var(--vermelho); }
+.dropdown--aberto .dropdown__opcao {
+  animation: degrau 0.26s ease both;
+  animation-delay: calc(min(var(--i) * 28ms, 420ms));
+}
+@keyframes degrau {
+  from { opacity: 0; transform: translate(-14px, -8px); }
+  to   { opacity: 1; transform: translate(0, 0); }
+}
+.dropdown__cor { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.35); flex: none; }
+
+/* =====================================================================
+   FORMULÁRIOS
+   ===================================================================== */
+.campo { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.campo__rotulo { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--texto-suave); }
+.campo__entrada {
+  width: 100%; padding: 9px 11px;
+  background: var(--fundo); border: 1px solid var(--borda); border-radius: 4px;
+  font-size: 12px; outline: none;
+  transition: border-color 0.2s ease;
+}
+.campo__entrada::placeholder { color: var(--texto-fraco); }
+.campo__entrada:focus { border-color: var(--vermelho); }
+textarea.campo__entrada { min-height: 84px; resize: vertical; }
+.form__grade { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form__grade .campo--cheio { grid-column: 1 / -1; }
+.form__mensagem { font-size: 12px; margin-top: 10px; min-height: 18px; }
+.form__mensagem--ok { color: #4ade80; }
+.form__mensagem--erro { color: #ff6b6b; }
+
+/* =====================================================================
+   RODAPÉ
+   ===================================================================== */
+#rodape { margin-top: 70px; border-top: 1px solid var(--borda); background: #0a0a0c; }
+.rodape__grade {
+  display: grid; grid-template-columns: 1.3fr 1.2fr 1.2fr 1.2fr; gap: 36px;
+  padding: 42px 0 30px;
+}
+.rodape__titulo { font-size: 17px; color: var(--vermelho); margin-bottom: 12px; }
+.rodape__texto { font-size: 11.5px; color: var(--texto-suave); line-height: 1.7; }
+.rodape__texto strong { color: var(--texto); font-weight: 600; }
+.rodape__selos { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.selo {
+  padding: 3px 8px; font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--superficie-3); border-radius: 3px; color: var(--texto);
+}
+.selo--vermelho { background: var(--vermelho); color: var(--branco); }
+.rodape__garantia { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px; }
+.rodape__garantia strong { display: block; color: var(--texto); font-size: 12px; margin-bottom: 4px; }
+.rodape__base {
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  padding: 16px 0 22px; border-top: 1px solid var(--borda);
+  font-size: 10.5px; color: var(--texto-fraco);
+}
+.rodape__links { display: flex; gap: 24px; flex-wrap: wrap; }
+.rodape__links a { transition: color 0.2s ease; }
+.rodape__links a:hover { color: var(--branco); }
+
+/* ---------- Responsivo (comum) ---------- */
+@media (max-width: 900px) {
+  .rodape__grade { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  /* header em duas linhas: logo em cima, menu embaixo (continua sticky) */
+  :root { --altura-header: 92px; }
+  .cabecalho__interno { flex-direction: column; justify-content: center; gap: 6px; padding: 0 12px; }
+  .logo { font-size: 20px; white-space: nowrap; }
+  .nav__lista { gap: 2px; }
+  .nav__link { padding: 6px 12px; font-size: 12px; }
+  .rodape__grade { grid-template-columns: 1fr; }
+  .form__grade { grid-template-columns: 1fr; }
+}
