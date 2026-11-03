@@ -79,7 +79,7 @@ WHERE v.slug = 'Honda-Civic-Touring-2024';
 -- =========== COROLLA
 -- =====================================================================
 
-INSERT INTO veiculos (
+/* INSERT INTO veiculos (
   slug, nome, nome_curto, modelo,
   marca_id, carroceria_id, cor_id, vendedor_id,
   ano_fabricacao, ano_modelo, quilometragem, preco, parcela_a_partir,
@@ -142,4 +142,80 @@ FROM (
          'Direct white-glove transport to São Paulo, Miami, Zurich, or Dubai.',
          'fa-solid fa-truck', 3
 ) d
-JOIN veiculos v ON v.slug = 'toyota-corolla-altis-hybrid-2022';
+JOIN veiculos v ON v.slug = 'toyota-corolla-altis-hybrid-2022'; */
+
+-- =====================================================================
+-- =====================================================================
+-- =========== CELTA
+-- =====================================================================
+
+INSERT INTO veiculos (
+  slug, nome, nome_curto, modelo,
+  marca_id, carroceria_id, cor_id, vendedor_id,
+  ano_fabricacao, ano_modelo, quilometragem, preco, parcela_a_partir,
+  potencia_cv, aceleracao_0_100, cambio, transmissao_detalhe, motor, subtitulo,
+  final_placa, id_estoque, cor_acabamento, revestimento_interno,
+  chips, descricao_curada, imagem_capa, relevancia
+) VALUES (
+  'chevrolet-celta-spirit-lt-2013',
+  'Celta Spirit LT',
+  'Chevrolet Celta Spirit LT',
+  'Celta',
+  (SELECT id FROM marcas      WHERE nome = 'Chevrolet'),
+  (SELECT id FROM carrocerias WHERE nome = 'Hatchback'),
+  (SELECT id FROM cores       WHERE nome = 'Cinza'),
+  1,
+  2013, 2013,
+  41200,                -- quilometragem
+  139900,               -- preço em R$ (sem pontos nem vírgula)
+  2290,                 -- "a partir de R$ 2.290/mês"
+  122, 10.5, 'Manual', 'CVT e-CVT', '1.0 Flex', '1.0 Flex • 82cv • 61.200km',
+  '***-**9', 'APL-321', 'Cinza Granito', 'Couro bege',
+  '61.200KM|CINZA GRANITO|FLEX',
+  'Hatch de único dono, com revisões feitas na concessionária e laudo cautelar aprovado. Muito econômico e silencioso na cidade.',
+  'https://autoconf-production.s3.amazonaws.com/veiculos/fotos/248413/11efb0b4-f165-44ca-b198-128380dbb9f2.jpg',
+  45
+);
+
+-- 2) AS TAGS do card (use nomes existentes: PROCURADO, 0KM, LUXO, FAMÍLIA, FAMILIAR, KILOMETRAGEM BAIXA)
+INSERT INTO veiculo_tags (veiculo_id, tag_id, ordem) VALUES
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), (SELECT id FROM tags WHERE nome = 'PROCURADO'),          1),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), (SELECT id FROM tags WHERE nome = 'KILOMETRAGEM BAIXA'), 2),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), (SELECT id FROM tags WHERE nome = 'FAMÍLIA'),            3);
+
+-- 3) AS IMAGENS da galeria (arquivos em public/img/veiculos/chevrolet-celta-spirit-lt-2013/)
+INSERT INTO veiculo_imagens (veiculo_id, rotulo, legenda, arquivo, ordem) VALUES
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'FRENTE',      'VISTA FRONTAL',      'https://images.pexels.com/photos/5976599/pexels-photo-5976599.jpeg?auto=compress&cs=tinysrgb&w=1200',      1),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'INTERNO',     'VISTA INTERNA',      'https://images.pexels.com/photos/9661395/pexels-photo-9661395.jpeg?auto=compress&cs=tinysrgb&w=1200',     2),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'TRASEIRA',    'VISTA TRASEIRA',     'https://images.pexels.com/photos/18542767/pexels-photo-18542767.jpeg?auto=compress&cs=tinysrgb&w=1200',    3),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'RODAS',       'DETALHE DAS RODAS',  'https://images.pexels.com/photos/13178608/pexels-photo-13178608.jpeg?auto=compress&cs=tinysrgb&w=1200',       4),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'PORTA-MALAS', 'PORTA-MALAS',        'https://images.pexels.com/photos/16495991/pexels-photo-16495991.jpeg?auto=compress&cs=tinysrgb&w=1200', 5);
+
+-- 4) OS OPCIONAIS (lista da página de detalhes)
+INSERT INTO veiculo_opcionais (veiculo_id, descricao, ordem) VALUES
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'Carro prático para a cidade',                      1),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'Central multimídia',      2),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'Step Incluso',   3),
+  ((SELECT id FROM veiculos WHERE slug = 'chevrolet-celta-spirit-lt-2013'), 'Baixo consumo de 18 km/l',      4);
+
+-- 5) OS 3 DIFERENCIAIS (textos padrão do site, edite se quiser)
+INSERT INTO veiculo_diferenciais (veiculo_id, titulo, descricao, icone, ordem)
+SELECT v.id, d.titulo, d.descricao, d.icone, d.ordem
+FROM (
+  SELECT 'PDI Dossier' AS titulo,
+         'Full Stuttgart build sheets, delivery monroney, and factory order book intact.' AS descricao,
+         'fa-solid fa-clipboard-check' AS icone, 1 AS ordem UNION ALL
+  SELECT 'Title in Escrow',
+         'Clean title held in secured international custody, ready for immediate wire transfer.',
+         'fa-solid fa-lock', 2 UNION ALL
+  SELECT 'Enclosed Transit',
+         'Direct white-glove transport to São Paulo, Miami, Zurich, or Dubai.',
+         'fa-solid fa-truck', 3
+) d
+JOIN veiculos v ON v.slug = 'chevrolet-celta-spirit-lt-2013';
+
+
+-- =====================================================================
+-- =====================================================================
+-- =========== UNO
+-- =====================================================================
