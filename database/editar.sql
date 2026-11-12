@@ -1,12 +1,12 @@
 
-DELETE FROM veiculos
+/* DELETE FROM veiculos
 WHERE slug = 'chevrolet-celta-spirit-lt-2013' COLLATE NOCASE;
-
+ */
 /* DELETE FROM veiculos
 WHERE slug != 'honda-civic-touring-2024' COLLATE NOCASE;
  */
 
-
+UPDATE veiculos SET preco = 30000 WHERE slug = 'chevrolet-celta-spirit-lt-2013' COLLATE NOCASE;
 
 
 /* TROCAR VEICULO EM DESTAQUE */
